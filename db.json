@@ -1,0 +1,90 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "testuser1",
+      "email": "testuser1@example.com",
+      "password": "password123"
+    },
+    {
+      "id": "2",
+      "username": "testuser2",
+      "email": "testuser2@example.com",
+      "password": "mypassword"
+    }
+  ],
+  "listing": [
+    {
+      "id": "1",
+      "title": "Item 1 from User 1",
+      "description": "Description of item 1",
+      "price": 10,
+      "image": "https://picsum.photos/150",
+      "email": "testuser1@example.com",
+      "condition": "Brand new"
+    },
+    {
+      "id": "2",
+      "title": "Item 2 from User 1",
+      "description": "Description of item 2",
+      "price": 20,
+      "image": "https://picsum.photos/150",
+      "email": "testuser1@example.com",
+      "condition": "Like new"
+    },
+    {
+      "id": "3",
+      "title": "Item 3 from User 1",
+      "description": "Description of item 3",
+      "price": 30,
+      "image": "https://picsum.photos/150",
+      "email": "testuser1@example.com",
+      "condition": "Lightly used"
+    },
+    {
+      "id": "4",
+      "title": "Item 4 from User 1",
+      "description": "Description of item 4",
+      "price": 40,
+      "image": "https://picsum.photos/150",
+      "email": "testuser1@example.com",
+      "condition": "Well used"
+    },
+    {
+      "id": "6",
+      "title": "Item 1 from User 2",
+      "description": "Description of item 1",
+      "price": 15,
+      "image": "https://picsum.photos/150",
+      "email": "testuser2@example.com",
+      "condition": "Lightly used"
+    },
+    {
+      "id": "7",
+      "title": "Item 2 from User 2",
+      "description": "Description of item 2",
+      "price": 25,
+      "image": "https://picsum.photos/150",
+      "email": "testuser2@example.com",
+      "condition": "Well used"
+    },
+    {
+      "id": "8",
+      "title": "Item 3 from User 2",
+      "description": "Description of item 3",
+      "price": 35,
+      "image": "https://picsum.photos/150",
+      "email": "testuser2@example.com",
+      "condition": "Heavily used"
+    },
+    {
+      "id": "9",
+      "title": "Item 4 from User 2",
+      "description": "Description of item 4",
+      "price": 45,
+      "image": "https://picsum.photos/150",
+      "email": "testuser2@example.com",
+      "condition": "Brand new"
+    }
+  ]
+}
