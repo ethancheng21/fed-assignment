@@ -1,63 +1,64 @@
 const wheel = document.getElementById("wheel");
 const spinBtn = document.getElementById("spin-btn");
 const finalValue = document.getElementById("final-value");
-
-// Object that stores values of minimum and maximum angle for a value
+//Object that stores values of minimum and maximum angle for a value
 const rotationValues = [
-  { minDegree: 0, maxDegree: 30, value: "100🪙" },
-  { minDegree: 31, maxDegree: 90, value: "500🪙" },
-  { minDegree: 91, maxDegree: 150, value: "Orange Banner" },
-  { minDegree: 151, maxDegree: 210, value: "1d Bump" },
-  { minDegree: 211, maxDegree: 270, value: "Blue and Orange Banner"  },
-  { minDegree: 271, maxDegree: 330, value: "200🪙" },
-  { minDegree: 331, maxDegree: 360, value:  "100🪙"},
+  { minDegree: 0, maxDegree: 30, value: 2 },
+  { minDegree: 31, maxDegree: 90, value: 1 },
+  { minDegree: 91, maxDegree: 150, value: 6 },
+  { minDegree: 151, maxDegree: 210, value: 5 },
+  { minDegree: 211, maxDegree: 270, value: 4 },
+  { minDegree: 271, maxDegree: 330, value: 3 },
+  { minDegree: 331, maxDegree: 360, value: 2 },
 ];
-// Size of each piece
+//Size of each piece
 const data = [16, 16, 16, 16, 16, 16];
-
-// Background color for each piece
-const pieColors = [
-  "#FF6F00", // Burnt Orange
-  "#FFA726", // Amber Orange
-  "#FF6F00", // Burnt Orange
-  "#FFA726", // Amber Orange
-  "#FF6F00", // Burnt Orange
-  "#FFA726", // Amber Orange
+//background color for each piece
+var pieColors = [
+  "#8b35bc",
+  "#b163da",
+  "#8b35bc",
+  "#b163da",
+  "#8b35bc",
+  "#b163da",
 ];
-
-// Create chart
+//Create chart
 let myChart = new Chart(wheel, {
+  //Plugin for displaying text on pie chart
   plugins: [ChartDataLabels],
+  //Chart Type Pie
   type: "pie",
   data: {
-    labels: ["500🪙","100🪙", "200🪙","2X⍰Banner","1d Bump","⍰ Banner"],
+    //Labels(values which are to be displayed on chart)
+    labels: [1, 2, 3, 4, 5, 6],
+    //Settings for dataset/pie
     datasets: [
       {
         backgroundColor: pieColors,
         data: data,
-        borderColor: "#008080", // Teal color for segment borders
-        borderWidth: 4, // Thickness of the lines
       },
     ],
   },
   options: {
+    //Responsive chart
     responsive: true,
     animation: { duration: 0 },
     plugins: {
-      tooltip: false, // Hide tooltip
+      //hide tooltip and legend
+      tooltip: false,
       legend: {
-        display: false, // Hide legend
+        display: false,
       },
+      //display labels inside pie chart
       datalabels: {
-        color: "#ffffff", // White text color
+        color: "#ffffff",
         formatter: (_, context) => context.chart.data.labels[context.dataIndex],
-        font: { size: 18 }, // Adjusted font size for better fit
-        anchor: "center", // Center the labels
-        align: "center", // Align labels properly
+        font: { size: 24 },
       },
     },
   },
 });
+//display value based on the randomAngle
 const valueGenerator = (angleValue) => {
   for (let i of rotationValues) {
     //if the angleValue is between min and max then display it
@@ -69,7 +70,6 @@ const valueGenerator = (angleValue) => {
   }
 };
 
-// Start spinning
 //Spinner count
 let count = 0;
 //100 rotations for animation and last rotation for result
