@@ -29,20 +29,11 @@ document.addEventListener("DOMContentLoaded", function() {
             fetchListings(query, selectedCondition); // Fetch listings with condition filter
         });
 
-        // Search Input Event for Real-Time Search
-        searchBar.addEventListener("input", function() {
-            const query = searchBar.value.toLowerCase();
-            console.log("Search Query on Input:", query); // Log the query when typing
-            fetchListings(query, selectedCondition); // Fetch listings with condition filter
-        });
-
         // Condition Button Click Event (Filter by condition)
         conditionButtons.forEach(button => {
             button.addEventListener('click', function() {
                 selectedCondition = this.innerText; // Set selected condition based on clicked button
                 highlightSelectedCondition(button);
-                const query = searchBar.value.toLowerCase();
-                fetchListings(query, selectedCondition); // Re-fetch with updated condition filter
             });
         });
 
