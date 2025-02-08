@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MokeSell Chat</title>
     <link rel="stylesheet" href="chat.css">
-    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
     <script src="chat.js" defer></script>
 </head>
 <body>
@@ -14,32 +13,20 @@
         <h1>MokeSell</h1>
         <nav>
             <ul>
-                <li>
-                    <button class="lottie-button">
-                        <dotlottie-player
-                            src="https://lottie.host/fd30fb9f-a07f-4254-9821-186c239af1db/BaV9LaSJyv.lottie"
-                            background="transparent"
-                            speed="1"
-                            direction="1"
-                            hover>
-                        </dotlottie-player>
-                    </button>
-                    <a href="index.html">Home</a>
-                </li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="profile.html">Profile</a></li>
                 <li><a href="search.html">Search</a></li>
                 <li><a href="chat.html">Chat</a></li>
-                <li><a href="login.html" class="login-button">Login</a></li>
+                <li><a href="login.html">Login</a></li>
                 <li><a href="#" id="logout-button">Logout</a></li>
-                <li><a href="register.html" class="register-button">Register</a></li>
-                <li><a href="sell.html" id="sell-button" class="sell-nav-button">Sell</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="sell.html">Sell</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Chat Layout -->
     <main class="chat-container">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <h2>Chats</h2>
             <ul class="chat-list">
@@ -67,14 +54,13 @@
             </ul>
         </aside>
 
-        <!-- Main Chat Section -->
         <section class="main-chat">
             <h2>Select a Chat</h2>
             <div class="messages">
                 <p>Welcome to the MokeSell chat system!</p>
             </div>
             <form class="message-form">
-                <input type="text" placeholder="Type a message..." />
+                <input type="text" placeholder="Type a message...">
                 <button type="submit">Send</button>
             </form>
         </section>

@@ -4,16 +4,18 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f8f9fa;
+    height: 100vh;
+    overflow: hidden; /* Prevents page scrolling */
 }
 
-/* Header Styling (Copied from index.css) */
+/* Header Styling */
 header {
     position: sticky;
     top: 0;
     z-index: 10;
     background: linear-gradient(45deg, #E86D2C, #E69631);
     color: white;
-    padding: 1rem 5vw; /* Scalable padding */
+    padding: 1rem 5vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -88,8 +90,8 @@ nav ul li a:hover {
     background: #ffffff;
     border-right: 1px solid #ddd;
     padding: 1rem;
-    overflow-y: auto; /* Sidebar is now scrollable */
     height: 100%;
+    overflow-y: auto; /* Sidebar scrollable */
 }
 
 .sidebar h2 {
@@ -131,9 +133,11 @@ nav ul li a:hover {
 
 .main-chat {
     flex: 1;
-    padding: 1rem;
+    display: flex;
+    flex-direction: column;
     height: 100%;
-    overflow-y: auto; /* Enables scrolling for the main chat area */
+    overflow: hidden; /* Prevents scroll bleed */
+    padding: 1rem;
 }
 
 .main-chat h2 {
@@ -142,13 +146,13 @@ nav ul li a:hover {
 }
 
 .messages {
+    flex: 1;
     background: #ffffff;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 1rem;
-    margin-bottom: 1rem;
-    height: calc(100vh - 200px); /* Adjust for form height */
     overflow-y: auto; /* Makes the messages section scrollable */
+    margin-bottom: 1rem;
 }
 
 .message-form {
@@ -177,4 +181,8 @@ nav ul li a:hover {
 
 .message-form button:hover {
     background: #0056b3;
+}
+.chat-item.active {
+    background-color: #f0f0f0;
+    border-left: 4px solid #007bff;
 }

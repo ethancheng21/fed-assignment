@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000"; // Update if necessary
+const API_URL = "http://localhost:5000"; // Update if necessary
 
 // Get logged-in user
 const loggedInUser = JSON.parse(localStorage.getItem("user"));
@@ -9,7 +9,6 @@ if (!loggedInUser) {
 
 let selectedChatUser = null; // Track the selected chat user
 
-// ✅ Load chat list for the user
 async function loadChatList() {
     try {
         const response = await fetch(`${API_URL}/users/${loggedInUser.id}`);
@@ -27,14 +26,21 @@ async function loadChatList() {
         Object.keys(userData.chats).forEach(contact => {
             const chatItem = document.createElement("li");
             chatItem.className = "chat-item";
+            chatItem.setAttribute("data-contact", contact); // Store contact info
             chatItem.innerHTML = `
                 <div class="chat-avatar"></div>
                 <div class="chat-info">
                     <strong>${contact}</strong>
-                    <p>Last message...</p>
+                    <p>${userData.chats[contact].slice(-1)[0]?.message || "No messages yet"}</p>
                 </div>
             `;
-            chatItem.onclick = () => loadMessages(contact);
+
+            // Add click event to load messages for the selected chat
+            chatItem.addEventListener("click", () => {
+                console.log("Selected contact:", contact); // Debugging log
+                loadMessages(contact);
+            });
+
             chatListContainer.appendChild(chatItem);
         });
     } catch (error) {
@@ -45,6 +51,17 @@ async function loadChatList() {
 // ✅ Load messages for a specific chat
 async function loadMessages(contactUsername) {
     selectedChatUser = contactUsername;
+
+    // Highlight the selected chat in the sidebar
+    document.querySelectorAll(".chat-item").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    const selectedChatItem = document.querySelector(`.chat-item[data-contact="${contactUsername}"]`);
+    if (selectedChatItem) {
+        selectedChatItem.classList.add("active");
+    }
+
     document.getElementById("chat-title").textContent = `Chat with ${contactUsername}`; // Update chat header
 
     try {
@@ -73,67 +90,47 @@ async function loadMessages(contactUsername) {
 }
 
 // ✅ Send a new message
-async function sendMessage(event) {
-    event.preventDefault();
+async function loadMessages(contactUsername) {
+    selectedChatUser = contactUsername;
 
-    if (!selectedChatUser) {
-        alert("Please select a chat first.");
-        return;
+    // Highlight the selected chat in the sidebar
+    document.querySelectorAll(".chat-item").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    const selectedChatItem = document.querySelector(`.chat-item[data-contact="${contactUsername}"]`);
+    if (selectedChatItem) {
+        selectedChatItem.classList.add("active");
     }
 
-    const messageInput = document.getElementById("message-input");
-    const newMessage = {
-        sender: loggedInUser.username,
-        message: messageInput.value.trim(),
-        timestamp: new Date().toISOString(),
-    };
-
-    if (!newMessage.message) return; // Prevent empty messages
+    document.getElementById("chat-title").textContent = `Chat with ${contactUsername}`; // Update chat header
 
     try {
-        // Fetch the current user data
         const response = await fetch(`${API_URL}/users/${loggedInUser.id}`);
         if (!response.ok) throw new Error("Failed to fetch user data");
 
-        let userData = await response.json();
+        const userData = await response.json();
+        const chatContainer = document.querySelector(".messages");
 
-        // Add the message to both sender and recipient chat histories
-        if (!userData.chats[selectedChatUser]) {
-            userData.chats[selectedChatUser] = [];
-        }
-        userData.chats[selectedChatUser].push(newMessage);
+        chatContainer.innerHTML = ""; // Clear previous messages
 
-        const recipientResponse = await fetch(`${API_URL}/users`);
-        const allUsers = await recipientResponse.json();
-        const recipient = allUsers.find(user => user.username === selectedChatUser);
-        if (!recipient) throw new Error("Recipient not found");
+        const messages = userData.chats[contactUsername] || [];
+        console.log("Messages for", contactUsername, messages); // Debugging log
 
-        if (!recipient.chats[loggedInUser.username]) {
-            recipient.chats[loggedInUser.username] = [];
-        }
-        recipient.chats[loggedInUser.username].push(newMessage);
-
-        // Update the sender's chat data
-        await fetch(`${API_URL}/users/${loggedInUser.id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(userData),
+        messages.forEach(message => {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("message");
+            messageElement.classList.add(
+                message.sender === loggedInUser.username ? "user-message" : "system-message"
+            );
+            messageElement.textContent = message.message;
+            chatContainer.appendChild(messageElement);
         });
 
-        // Update the recipient's chat data
-        await fetch(`${API_URL}/users/${recipient.id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(recipient),
-        });
-
-        // Reload chat messages
-        loadMessages(selectedChatUser);
-
-        // Clear input field
-        messageInput.value = "";
+        // Scroll to latest message
+        chatContainer.scrollTop = chatContainer.scrollHeight;
     } catch (error) {
-        console.error("Error sending message:", error.message);
+        console.error("Error loading messages:", error.message);
     }
 }
 
