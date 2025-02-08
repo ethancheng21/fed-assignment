@@ -6,7 +6,6 @@
   }
   body {
     height: 100vh;
-    background: linear-gradient(135deg, #c3a3f1, #6414e9);
   }
   .wrapper {
     width: 90%;
@@ -20,6 +19,7 @@
     padding: 3em;
     border-radius: 1em;
     box-shadow: 0 4em 5em rgba(27, 8, 53, 0.2);
+    outline: 4px solid #E69631
   }
   .container {
     position: relative;
@@ -53,6 +53,7 @@
     font-size: 1.8em;
     letter-spacing: 0.1em;
     font-weight: 600;
+    outline: 3px solid #008080
   }
   img {
     position: absolute;
