@@ -5,9 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const searchBtn = document.getElementById("search-btn");
         const listingsContainer = document.getElementById("featured-listings-container");
 
-        // Get the filter inputs for condition and price range
-        const minPriceInput = document.getElementById("min-price");
-        const maxPriceInput = document.getElementById("max-price");
+        // Get the condition buttons and the clear filter button
         const conditionButtons = document.querySelectorAll('.condition-btn'); // Condition buttons
         const clearFilterBtn = document.getElementById("clear-filters"); // Clear filter button
         
@@ -28,14 +26,14 @@ document.addEventListener("DOMContentLoaded", function() {
         searchBtn.addEventListener("click", function() {
             const query = searchBar.value.toLowerCase();
             console.log("Search Query on Button Click:", query); // Log the query when clicked
-            fetchListings(query, selectedCondition, minPriceInput.value, maxPriceInput.value); // Fetch listings with filters
+            fetchListings(query, selectedCondition); // Fetch listings with condition filter
         });
 
         // Search Input Event for Real-Time Search
         searchBar.addEventListener("input", function() {
             const query = searchBar.value.toLowerCase();
             console.log("Search Query on Input:", query); // Log the query when typing
-            fetchListings(query, selectedCondition, minPriceInput.value, maxPriceInput.value); // Fetch listings with filters
+            fetchListings(query, selectedCondition); // Fetch listings with condition filter
         });
 
         // Condition Button Click Event (Filter by condition)
@@ -44,18 +42,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 selectedCondition = this.innerText; // Set selected condition based on clicked button
                 highlightSelectedCondition(button);
                 const query = searchBar.value.toLowerCase();
-                fetchListings(query, selectedCondition, minPriceInput.value, maxPriceInput.value); // Re-fetch with updated condition filter
+                fetchListings(query, selectedCondition); // Re-fetch with updated condition filter
             });
         });
 
         // Clear Filters Button Click Event
         clearFilterBtn.addEventListener("click", function() {
-            // Reset condition and price filters to default
+            // Reset condition filter to default
             selectedCondition = '';
-            minPriceInput.value = '';
-            maxPriceInput.value = '';
             conditionButtons.forEach(button => button.classList.remove('selected')); // Remove all selected condition styles
-            fetchListings(searchBar.value.toLowerCase(), '', '', ''); // Re-fetch listings without filters
+            fetchListings(searchBar.value.toLowerCase(), ''); // Re-fetch listings without filters
         });
 
         // Initial fetch for featured listings
@@ -63,8 +59,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 500); // Delay by 500ms
 });
 
-// Fetch Listings Based on Search Query, Condition, and Price Range
-async function fetchListings(query, selectedCondition, minPrice, maxPrice) {
+// Fetch Listings Based on Search Query and Condition
+async function fetchListings(query, selectedCondition) {
     if (!query) {
         console.error("Search query is empty.");
         return;
@@ -72,23 +68,17 @@ async function fetchListings(query, selectedCondition, minPrice, maxPrice) {
 
     console.log("Search Query:", query);
     console.log("Selected Condition:", selectedCondition);
-    console.log("Price Range: $", minPrice, " - $", maxPrice);
 
     try {
         const response = await fetch("db.json"); // Fetch the local db.json
         const listings = await response.json();
 
-        // Use price range values or default to 0 and Infinity
-        const min = minPrice || 0;
-        const max = maxPrice || Infinity;
-
-        // Filter the listings by matching the title with the query, condition, and price range
+        // Filter the listings by matching the title with the query and condition
         const filteredListings = listings.listing.filter(item => {
             const matchesQuery = item.title.toLowerCase().includes(query.toLowerCase());
             const matchesCondition = selectedCondition ? item.condition.toLowerCase() === selectedCondition.toLowerCase() : true;
-            const matchesPrice = item.price >= min && item.price <= max;
 
-            return matchesQuery && matchesCondition && matchesPrice;
+            return matchesQuery && matchesCondition;
         });
 
         displaySearchResults(filteredListings);
