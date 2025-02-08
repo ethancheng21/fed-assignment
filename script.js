@@ -5,6 +5,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const searchBtn = document.getElementById("search-btn");
         const listingsContainer = document.getElementById("featured-listings-container");
 
+        // Filter inputs for condition and price range
+        const minPriceInput = document.getElementById("min-price");
+        const maxPriceInput = document.getElementById("max-price");
+        const conditionButtons = document.querySelectorAll('.condition-btn'); // Condition buttons
+
+        let selectedCondition = ''; // Initialize selected condition as empty string
+
         // Log elements to verify they are loaded
         console.log("Search Bar:", searchBar);
         console.log("Search Button:", searchBtn);
@@ -20,14 +27,24 @@ document.addEventListener("DOMContentLoaded", function() {
         searchBtn.addEventListener("click", function() {
             const query = searchBar.value.toLowerCase();
             console.log("Search Query on Button Click:", query); // Log the query when clicked
-            fetchListings(query);
+            fetchListings(query, selectedCondition, minPriceInput.value, maxPriceInput.value); // Fetch listings with filters
         });
 
         // Search Input Event for Real-Time Search
         searchBar.addEventListener("input", function() {
             const query = searchBar.value.toLowerCase();
             console.log("Search Query on Input:", query); // Log the query when typing
-            fetchListings(query);
+            fetchListings(query, selectedCondition, minPriceInput.value, maxPriceInput.value); // Fetch listings with filters
+        });
+
+        // Condition Button Click Event (Filter by condition)
+        conditionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                selectedCondition = this.innerText; // Set selected condition based on clicked button
+                highlightSelectedCondition(button);
+                const query = searchBar.value.toLowerCase();
+                fetchListings(query, selectedCondition, minPriceInput.value, maxPriceInput.value); // Re-fetch with updated condition filter
+            });
         });
 
         // Initial fetch for featured listings
@@ -35,24 +52,32 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 500); // Delay by 500ms
 });
 
-// Fetch Listings Based on Search Query
-async function fetchListings(query) {
+// Fetch Listings Based on Search Query, Condition, and Price Range
+async function fetchListings(query, selectedCondition, minPrice, maxPrice) {
     if (!query) {
         console.error("Search query is empty.");
         return;
     }
 
-    // Log the query to ensure it's correct
     console.log("Search Query:", query);
+    console.log("Selected Condition:", selectedCondition);
+    console.log("Price Range: $", minPrice, " - $", maxPrice);
 
     try {
         const response = await fetch("db.json"); // Fetch the local db.json
         const listings = await response.json();
 
-        // Filter the listings by matching the title with the query
+        // Use price range values or default to 0 and Infinity
+        const min = minPrice || 0;
+        const max = maxPrice || Infinity;
+
+        // Filter the listings by matching the title with the query, condition, and price range
         const filteredListings = listings.listing.filter(item => {
-            // Matching by name only, case insensitive
-            return item.title.toLowerCase().includes(query.toLowerCase());
+            const matchesQuery = item.title.toLowerCase().includes(query.toLowerCase());
+            const matchesCondition = selectedCondition ? item.condition.toLowerCase() === selectedCondition.toLowerCase() : true;
+            const matchesPrice = item.price >= min && item.price <= max;
+
+            return matchesQuery && matchesCondition && matchesPrice;
         });
 
         displaySearchResults(filteredListings);
@@ -61,14 +86,13 @@ async function fetchListings(query) {
     }
 }
 
-
 // Display Search Results
 function displaySearchResults(listings) {
     const resultsContainer = document.getElementById("search-results-container");
     resultsContainer.innerHTML = ""; // Clear previous results
 
     if (listings.length === 0) {
-        resultsContainer.innerHTML = "<p>No items found based on your search.</p>";
+        resultsContainer.innerHTML = "<p>No items found based on your search and filters.</p>";
         return;
     }
 
@@ -82,15 +106,20 @@ function displaySearchResults(listings) {
                  onerror="this.src='https://via.placeholder.com/150';" />
             <h3>${item.title}</h3>
             <p>${item.description}</p>
-            <span>Price: $${item.price},</span>
+            <span>Price: $${item.price}</span>
             <span>Condition: ${item.condition}</span>
         `;
         
-        // Add the created listing element to the container
         resultsContainer.appendChild(itemElement);
     });
 }
 
+// Highlight selected condition button
+function highlightSelectedCondition(selected) {
+    const buttons = document.querySelectorAll('.condition-btn');
+    buttons.forEach(button => button.classList.remove('selected')); // Remove previous selections
+    selected.classList.add('selected'); // Highlight current selection
+}
 
 // Fetch Featured Listings
 async function fetchFeaturedListings() {
@@ -116,7 +145,7 @@ async function fetchFeaturedListings() {
                      onerror="this.src='https://via.placeholder.com/150';" />
                 <h3>${listing.title}</h3>
                 <p>${listing.description}</p>
-                <span>Price: $${listing.price},</span>
+                <span>Price: $${listing.price}</span>
                 <span>Condition: ${listing.condition}</span>
             </div>
         `).join('');
