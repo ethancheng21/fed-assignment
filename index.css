@@ -6,6 +6,7 @@ body {
     background-color: #f8f9fa;
 }
 
+
 /* Header Styling */
 header {
     position: sticky;
@@ -19,10 +20,12 @@ header {
     align-items: center;
 }
 
+
 header h1 {
     margin: 0;
     font-size: 1.5rem;
 }
+
 
 nav ul {
     list-style: none;
@@ -32,11 +35,13 @@ nav ul {
     gap: 1rem;
 }
 
+
 nav ul li {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
 }
+
 
 nav ul li a {
     font-size: 1rem;
@@ -48,10 +53,12 @@ nav ul li a {
     transition: background-color 0.3s;
 }
 
+
 nav ul li a:hover {
     background-color: white;
     color: #E86D2C;
 }
+
 
 /* Lottie Button Styling */
 .lottie-button {
@@ -66,6 +73,7 @@ nav ul li a:hover {
     height: auto; /* Maintain aspect ratio */
 }
 
+
 .lottie-button dotlottie-player {
     width: 100%; /* Matches the parent button width */
     height: auto; /* Maintain aspect ratio */
@@ -73,10 +81,12 @@ nav ul li a:hover {
     transition: transform 0.2s ease;
 }
 
+
 .lottie-button:hover dotlottie-player {
     transform: scale(1.1); /* Interactive hover scaling */
     transition: transform 0.2s ease;
 }
+
 
 /* Welcome Banner Section */
 #welcome-banner {
@@ -86,17 +96,20 @@ nav ul li a:hover {
     margin-bottom: 2vh;
 }
 
+
 .welcome-text h2 {
     font-size: 2rem;
     margin: 0;
     color: #333;
 }
 
+
 .welcome-text p {
     font-size: 1rem;
     margin: 0.5rem 0 0;
     color: #666;
 }
+
 
 /* Search Bar Styling */
 .search-bar {
@@ -108,6 +121,7 @@ nav ul li a:hover {
     max-width: 80%;
 }
 
+
 .search-bar input[type="text"] {
     width: 100%;
     padding: 0.8em;
@@ -116,6 +130,7 @@ nav ul li a:hover {
     outline: none;
     font-size: 1rem;
 }
+
 
 .search-bar button {
     padding: 0.8em 2em;
@@ -127,6 +142,7 @@ nav ul li a:hover {
     font-size: 1rem;
     transition: background-color 0.3s ease;
 }
+
 
 .search-bar button:hover {
     background: #E86D2C;
@@ -141,11 +157,13 @@ nav ul li a:hover {
     margin-top: 1.5vh; /* Move it closer to the search bar */
 }
 
+
 .condition-buttons {
     display: flex;
     justify-content: flex-start; /* Align buttons to the left */
     gap: 1rem;
 }
+
 
 .condition-btn {
     padding: 0.8em 1.5em;
@@ -157,9 +175,11 @@ nav ul li a:hover {
     transition: background-color 0.3s ease;
 }
 
+
 .condition-btn:hover {
     background-color: #f8f9fa;
 }
+
 
 #clear-filters {
     padding: 0.8em 2em;
@@ -173,9 +193,12 @@ nav ul li a:hover {
     margin-top: 1.5vh; /* Ensure it's below search bar */
 }
 
+
 #clear-filters:hover {
     background: linear-gradient(45deg, #D97A25, #E86D2C); /* Darker gradient for hover effect */
 }
+
+
 
 
 /* Featured Listings Section */
@@ -187,6 +210,7 @@ nav ul li a:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+
 #search-results h2 {
     font-size: 1.8rem;
     margin-bottom: 2vh;
@@ -194,11 +218,13 @@ nav ul li a:hover {
     text-align: center;
 }
 
+
 #search-results-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
     gap: 2vw;
 }
+
 
 #search-results-container .listing {
     background: #ffffff;
@@ -210,10 +236,12 @@ nav ul li a:hover {
     transition: transform 0.3s;
 }
 
+
 #search-results-container .listing:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 
 #search-results-container .listing img {
     max-width: 100%;
@@ -223,6 +251,7 @@ nav ul li a:hover {
     margin-bottom: 1vh;
 }
 
+
 #search-results-container .listing h3 {
     font-size: 1rem;
     margin: 0.5rem 0;
@@ -230,10 +259,12 @@ nav ul li a:hover {
     color: #333;
 }
 
+
 #search-results-container .listing p {
     font-size: 0.9rem;
     color: #555;
 }
+
 
 /* Listings Section */
 .listing-grid {
@@ -246,6 +277,7 @@ nav ul li a:hover {
     box-sizing: border-box;
 }
 
+
 /* Search Results Section */
 #search-results-container {
     display: grid;
@@ -257,6 +289,7 @@ nav ul li a:hover {
     box-sizing: border-box;
 }
 
+
 /* Featured Listings Section */
 #featured-listings-container {
     display: grid;
@@ -267,6 +300,7 @@ nav ul li a:hover {
     padding: 1rem;
     box-sizing: border-box;
 }
+
 
 /* Featured Listings Section */
 #featured-listings-container {
@@ -283,6 +317,7 @@ nav ul li a:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
 }
 
+
 /* Individual Listing Card */
 #featured-listings-container .listing {
     background: #fff;
@@ -294,11 +329,13 @@ nav ul li a:hover {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
+
 /* Hover Effect on Listing */
 #featured-listings-container .listing:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 
 /* Image Styling */
 #featured-listings-container .listing img {
@@ -309,6 +346,7 @@ nav ul li a:hover {
     margin-bottom: 1rem;
 }
 
+
 /* Title and Description */
 #featured-listings-container .listing h3 {
     font-size: 1.1rem;
@@ -317,10 +355,12 @@ nav ul li a:hover {
     margin-bottom: 0.5rem;
 }
 
+
 #featured-listings-container .listing p {
     font-size: 0.9rem;
     color: #555;
 }
+
 
 /* Condition Filter */
 #condition-filter {
@@ -333,10 +373,17 @@ nav ul li a:hover {
     margin: 3vh auto; /* Adjusting space below the search bar */
 }
 
+
 .condition-buttons {
     display: flex;
     gap: 1rem;
+    position: sticky;
+    top: 0; /* Keep it at the top of the viewport while scrolling */
+    z-index: 5; /* Lower z-index than the header */
+    background-color: transparent; /* Optional: Set a background for better visibility */
+    padding: 1vh 0;
 }
+
 
 .condition-btn {
     padding: 0.8em 1.5em;
@@ -346,12 +393,13 @@ nav ul li a:hover {
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s ease;
-    z-index: 10; /* Ensure buttons are clickable */
 }
+
 
 .condition-btn:hover {
     background-color: #f8f9fa;
 }
+
 
 #clear-filters {
     padding: 0.8em 2em;
@@ -362,12 +410,13 @@ nav ul li a:hover {
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s ease;
-    z-index: 10; /* Ensure button is clickable */
 }
+
 
 #clear-filters:hover {
     background: linear-gradient(45deg, #D97A25, #E86D2C); /* Darker gradient for hover effect */
 }
+
 
 /* Footer Styling */
 footer {
@@ -378,42 +427,52 @@ footer {
     margin-top: auto;
 }
 
+
 /* Responsive Styling */
 @media (max-width: 768px) {
     header {
         padding: 1rem 2vw;
     }
 
+
     nav ul {
         gap: 0.5rem;
     }
+
 
     nav ul li a {
         font-size: 0.9rem;
         padding: 0.4rem 0.8rem;
     }
 
+
     .search-bar {
         max-width: 90%;
     }
+
 
     .search-bar button {
         padding: 0.6em 1.2em;
     }
 
+
     #search-results {
         padding: 3vh 2vw;
     }
+
 
     #search-results-container .listing {
         padding: 1.5vh 1vw;
     }
 
+
     .lottie-button {
         width: 1.5em; /* Slightly smaller on mobile */
     }
+
 
     .lottie-button dotlottie-player {
         width: 1.5em; /* Adjusts with button size */
     }
 }
+

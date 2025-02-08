@@ -1,37 +1,41 @@
-const API_URL = "http://localhost:3000"; // Update with your server URL
+const API_URL = "http://localhost:3000"; // Update if necessary
 
-// Get logged-in user from localStorage
+// Get logged-in user
 const loggedInUser = JSON.parse(localStorage.getItem("user"));
 if (!loggedInUser) {
     alert("Please log in to access chats.");
     window.location.href = "login.html";
 }
 
-let selectedChatId = null; // Track the selected chat
+let selectedChatUser = null; // Track the selected chat user
 
 // ✅ Load chat list for the user
 async function loadChatList() {
     try {
-        const response = await fetch(`${API_URL}/chats`);
-        if (!response.ok) throw new Error("Failed to fetch chat list");
+        const response = await fetch(`${API_URL}/users/${loggedInUser.id}`);
+        if (!response.ok) throw new Error("Failed to fetch user data");
 
-        const chats = await response.json();
-        const chatListContainer = document.getElementById("chat-list");
-        chatListContainer.innerHTML = ""; // Clear chat list
+        const userData = await response.json();
+        const chatListContainer = document.querySelector(".chat-list");
+        chatListContainer.innerHTML = ""; // Clear previous chat list
 
-        chats.forEach(chat => {
-            if (chat.participants.includes(loggedInUser.id)) {
-                const otherUserId = chat.participants.find(id => id !== loggedInUser.id);
-                
-                fetch(`${API_URL}/users/${otherUserId}`)
-                    .then(res => res.json())
-                    .then(user => {
-                        const chatItem = document.createElement("li");
-                        chatItem.textContent = user.username;
-                        chatItem.onclick = () => loadMessages(chat.id, user.username);
-                        chatListContainer.appendChild(chatItem);
-                    });
-            }
+        if (!userData.chats || Object.keys(userData.chats).length === 0) {
+            chatListContainer.innerHTML = "<p>No chats available.</p>";
+            return;
+        }
+
+        Object.keys(userData.chats).forEach(contact => {
+            const chatItem = document.createElement("li");
+            chatItem.className = "chat-item";
+            chatItem.innerHTML = `
+                <div class="chat-avatar"></div>
+                <div class="chat-info">
+                    <strong>${contact}</strong>
+                    <p>Last message...</p>
+                </div>
+            `;
+            chatItem.onclick = () => loadMessages(contact);
+            chatListContainer.appendChild(chatItem);
         });
     } catch (error) {
         console.error("Error loading chat list:", error.message);
@@ -39,28 +43,29 @@ async function loadChatList() {
 }
 
 // ✅ Load messages for a specific chat
-async function loadMessages(chatId, chatTitle) {
-    selectedChatId = chatId;
-    document.getElementById("chat-title").textContent = chatTitle; // Update chat header
+async function loadMessages(contactUsername) {
+    selectedChatUser = contactUsername;
+    document.getElementById("chat-title").textContent = `Chat with ${contactUsername}`; // Update chat header
 
     try {
-        const response = await fetch(`${API_URL}/chats/${chatId}`);
-        if (!response.ok) throw new Error("Failed to fetch chat messages");
+        const response = await fetch(`${API_URL}/users/${loggedInUser.id}`);
+        if (!response.ok) throw new Error("Failed to fetch user data");
 
-        const chatData = await response.json();
-        const chatContainer = document.getElementById("chat-container");
+        const userData = await response.json();
+        const chatContainer = document.querySelector(".messages");
 
         chatContainer.innerHTML = ""; // Clear previous messages
 
-        chatData.messages.forEach(message => {
+        const messages = userData.chats[contactUsername] || [];
+        messages.forEach(message => {
             const messageElement = document.createElement("div");
             messageElement.classList.add("message");
-            messageElement.classList.add(message.senderId === loggedInUser.id ? "sent-message" : "received-message");
-            messageElement.textContent = message.content;
+            messageElement.classList.add(message.sender === loggedInUser.username ? "user-message" : "system-message");
+            messageElement.textContent = message.message;
             chatContainer.appendChild(messageElement);
         });
 
-        // Scroll to the latest message
+        // Scroll to latest message
         chatContainer.scrollTop = chatContainer.scrollHeight;
     } catch (error) {
         console.error("Error loading messages:", error.message);
@@ -71,43 +76,61 @@ async function loadMessages(chatId, chatTitle) {
 async function sendMessage(event) {
     event.preventDefault();
 
-    if (!selectedChatId) {
+    if (!selectedChatUser) {
         alert("Please select a chat first.");
         return;
     }
 
     const messageInput = document.getElementById("message-input");
     const newMessage = {
-        senderId: loggedInUser.id,
-        content: messageInput.value.trim(),
+        sender: loggedInUser.username,
+        message: messageInput.value.trim(),
         timestamp: new Date().toISOString(),
     };
 
-    if (!newMessage.content) return; // Prevent sending empty messages
+    if (!newMessage.message) return; // Prevent empty messages
 
     try {
-        // Fetch the current chat
-        const response = await fetch(`${API_URL}/chats/${selectedChatId}`);
-        if (!response.ok) throw new Error("Failed to fetch chat for update");
+        // Fetch the current user data
+        const response = await fetch(`${API_URL}/users/${loggedInUser.id}`);
+        if (!response.ok) throw new Error("Failed to fetch user data");
 
-        const chat = await response.json();
+        let userData = await response.json();
 
-        // Add new message to chat
-        chat.messages.push(newMessage);
+        // Add the message to both sender and recipient chat histories
+        if (!userData.chats[selectedChatUser]) {
+            userData.chats[selectedChatUser] = [];
+        }
+        userData.chats[selectedChatUser].push(newMessage);
 
-        // Update chat on server
-        const updateResponse = await fetch(`${API_URL}/chats/${selectedChatId}`, {
+        const recipientResponse = await fetch(`${API_URL}/users`);
+        const allUsers = await recipientResponse.json();
+        const recipient = allUsers.find(user => user.username === selectedChatUser);
+        if (!recipient) throw new Error("Recipient not found");
+
+        if (!recipient.chats[loggedInUser.username]) {
+            recipient.chats[loggedInUser.username] = [];
+        }
+        recipient.chats[loggedInUser.username].push(newMessage);
+
+        // Update the sender's chat data
+        await fetch(`${API_URL}/users/${loggedInUser.id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(chat),
+            body: JSON.stringify(userData),
         });
 
-        if (!updateResponse.ok) throw new Error("Failed to update chat");
+        // Update the recipient's chat data
+        await fetch(`${API_URL}/users/${recipient.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(recipient),
+        });
 
         // Reload chat messages
-        loadMessages(selectedChatId, document.getElementById("chat-title").textContent);
+        loadMessages(selectedChatUser);
 
-        // Clear the input field
+        // Clear input field
         messageInput.value = "";
     } catch (error) {
         console.error("Error sending message:", error.message);
@@ -118,7 +141,7 @@ async function sendMessage(event) {
 document.addEventListener("DOMContentLoaded", () => {
     loadChatList();
 
-    const chatInputForm = document.getElementById("chat-input-form");
+    const chatInputForm = document.querySelector(".message-form");
     if (chatInputForm) {
         chatInputForm.addEventListener("submit", sendMessage);
     }
