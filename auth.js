@@ -1,7 +1,9 @@
+const API_URL = "http://localhost:5000/users"; // Change this to your actual API URL when needed
 
+// ✅ Function to log in the user
 async function loginUser(event) {
     event.preventDefault();
-    console.log("Login function triggered"); // Check if the function is called
+    console.log("Login function triggered");
 
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
@@ -9,8 +11,8 @@ async function loginUser(event) {
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
 
-    console.log("Entered Email:", email); // Log the email entered
-    console.log("Entered Password:", password); // Log the password entered
+    console.log("Entered Email:", email);
+    console.log("Entered Password:", password);
 
     if (!email || !password) {
         alert("Please fill in all fields.");
@@ -20,19 +22,17 @@ async function loginUser(event) {
     try {
         const response = await fetch(`${API_URL}?email=${email}`, {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
         });
 
-        console.log("API Response Status:", response.status); // Log API response status
+        console.log("API Response Status:", response.status);
 
         if (!response.ok) {
             throw new Error(`Login failed: ${response.statusText}`);
         }
 
         const users = await response.json();
-        console.log("Fetched Users:", users); // Log fetched users from the API
+        console.log("Fetched Users:", users);
 
         if (users.length === 0) {
             alert("No user found with this email.");
@@ -40,12 +40,23 @@ async function loginUser(event) {
         }
 
         const user = users[0];
-        console.log("Matched User:", user); // Log the user that matched
+        console.log("Matched User:", user);
 
-        // Direct comparison of plaintext passwords
+        // ✅ Ensure that password checking is correct
         if (password === user.password) {
             console.log("Login Successful. Storing user in localStorage...");
-            localStorage.setItem("user", JSON.stringify(user)); // Store user in localStorage
+
+            // ✅ Store user info properly
+            const userDataToStore = {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                chats: user.chats || {} // Ensure chats exist
+            };
+
+            localStorage.setItem("user", JSON.stringify(userDataToStore));
+            console.log("User Stored in Local Storage:", JSON.parse(localStorage.getItem("user")));
+            
             window.location.href = "profile.html"; // Redirect to profile page
         } else {
             alert("Invalid password. Please try again.");
@@ -56,7 +67,7 @@ async function loginUser(event) {
     }
 }
 
-// Attach the login function to the login form
+// ✅ Attach the login function to the login form
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
@@ -64,8 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-
-// Function to register a new user
+// ✅ Function to register a new user
 async function registerUser(event) {
     event.preventDefault(); // Stop form submission
 
@@ -83,20 +93,16 @@ async function registerUser(event) {
     }
 
     try {
-        // Hash the password (use bcryptjs for consistency if using bcrypt-hashed passwords in db.json)
-        const hashedPassword = password; // No hashing for localhost testing
-
         const userData = {
             username: username,
             email: email,
-            password: hashedPassword, // Store plaintext for simplicity in local tests
+            password: password, // No hashing for localhost testing
+            chats: {} // ✅ Ensure new users start with an empty chat log
         };
 
         const response = await fetch(API_URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userData),
         });
 
@@ -113,22 +119,21 @@ async function registerUser(event) {
     }
 }
 
-
-
-// Function to log out the user
+// ✅ Function to log out the user
 function logoutUser(event) {
     event.preventDefault(); // Prevent default link behavior
-    console.log("Logout button clicked"); // Log to confirm button press
+    console.log("Logout button clicked");
 
-    // Remove the user data from localStorage
+    // ✅ Remove user from storage properly
     localStorage.removeItem("user");
+
     console.log("User removed from localStorage");
 
     // Redirect to login page
     window.location.href = "login.html";
 }
 
-// Attach logout function to the logout button
+// ✅ Attach logout function to the logout button
 document.addEventListener("DOMContentLoaded", () => {
     const logoutButton = document.getElementById("logout-button");
     if (logoutButton) {

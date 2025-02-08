@@ -1,13 +1,12 @@
-/* General Styles */
+/* General Styling */
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    margin: 0;
+    padding: 0;
     background-color: #f8f9fa;
 }
-/* Header Styling */
+
+/* Header Styling (Copied from index.css) */
 header {
     position: sticky;
     top: 0;
@@ -54,116 +53,128 @@ nav ul li a:hover {
     color: #E86D2C;
 }
 
-/* Chat Layout */
+/* Lottie Button Styling */
+.lottie-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2em;
+    height: auto;
+}
+
+.lottie-button dotlottie-player {
+    width: 100%;
+    height: auto;
+    transition: transform 0.2s ease;
+}
+
+.lottie-button:hover dotlottie-player {
+    transform: scale(1.1);
+}
+
+/* Chat Layout Styling */
 .chat-container {
     display: flex;
-    flex: 1;
-    overflow: hidden;
+    height: calc(100vh - 80px); /* Adjusting for header height */
+    overflow: hidden; /* Prevents scrolling the entire container */
 }
 
-/* Sidebar */
 .sidebar {
     width: 25%;
-    background-color: #ffffff;
+    background: #ffffff;
     border-right: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
     padding: 1rem;
+    overflow-y: auto; /* Sidebar is now scrollable */
+    height: 100%;
 }
 
-.sidebar h3 {
-    margin-top: 0;
-    font-size: 1.2rem;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 0.5rem;
-    color: #333;
+.sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
 
-.chat-list, .options-list {
-    margin: 1rem 0;
-}
-
-.chat-list ul, .options-list ul {
+.chat-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.chat-list ul li, .options-list ul li {
-    padding: 0.8rem 0.5rem;
-    border-bottom: 1px solid #f4f4f4;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.chat-list ul li:hover, .options-list ul li:hover {
-    background-color: #f1f1f1;
-}
-
-/* Main Chat Area */
-.chat-main {
-    flex: 1;
+.chat-item {
     display: flex;
-    flex-direction: column;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
 }
 
-/* Chat Header */
-.chat-header {
-    background: linear-gradient(45deg, #E86D2C, #E69631);
-    color: white;
-    padding: 1rem;
-    text-align: center;
-    font-weight: bold;
+.chat-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ddd;
 }
 
-/* Chat Messages */
-.chat-messages {
+.chat-item strong {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+    display: block;
+}
+
+.chat-item p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+.main-chat {
     flex: 1;
     padding: 1rem;
-    background-color: #f4f4f4;
-    overflow-y: auto;
+    height: 100%;
+    overflow-y: auto; /* Enables scrolling for the main chat area */
 }
 
-.message {
+.main-chat h2 {
+    font-size: 1.5rem;
     margin-bottom: 1rem;
 }
 
-.message.user {
-    text-align: right;
-    color: #007bff;
-}
-
-.message.system {
-    text-align: left;
-    color: #6c757d;
-}
-
-/* Chat Input */
-.chat-input {
-    display: flex;
-    padding: 0.5rem;
-    background-color: #ffffff;
-    border-top: 1px solid #ddd;
-}
-
-.chat-input input[type="text"] {
-    flex: 1;
-    padding: 0.8rem;
+.messages {
+    background: #ffffff;
     border: 1px solid #ddd;
-    border-radius: 4px 0 0 4px;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    height: calc(100vh - 200px); /* Adjust for form height */
+    overflow-y: auto; /* Makes the messages section scrollable */
+}
+
+.message-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.message-form input {
+    flex: 1;
+    padding: 0.8em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     font-size: 1rem;
 }
 
-.chat-input button {
-    padding: 0.8rem 1.5rem;
-    background: linear-gradient(45deg, #E86D2C, #E69631);
+.message-form button {
+    padding: 0.8em 2em;
+    background: #007bff;
     color: white;
     border: none;
-    border-radius: 0 4px 4px 0;
+    border-radius: 4px;
     cursor: pointer;
     font-size: 1rem;
+    transition: background-color 0.3s;
 }
 
-.chat-input button:hover {
-    background: #E86D2C;
+.message-form button:hover {
+    background: #0056b3;
 }

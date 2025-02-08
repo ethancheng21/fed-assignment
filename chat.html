@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MokeSell Chat</title>
     <link rel="stylesheet" href="chat.css">
-    <script src="chat.js" defer></script>
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <script src="chat.js" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -15,16 +15,15 @@
         <nav>
             <ul>
                 <li>
-                    <a href="gamespage.html" class="lottie-link">
-                        <dotlottie-player 
-                            src="https://lottie.host/fd30fb9f-a07f-4254-9821-186c239af1db/BaV9LaSJyv.lottie" 
-                            background="transparent" 
-                            speed="1" 
-                            direction="1" 
-                            hover 
-                            style="width: 50px; height: 50px;">
+                    <button class="lottie-button">
+                        <dotlottie-player
+                            src="https://lottie.host/fd30fb9f-a07f-4254-9821-186c239af1db/BaV9LaSJyv.lottie"
+                            background="transparent"
+                            speed="1"
+                            direction="1"
+                            hover>
                         </dotlottie-player>
-                    </a>
+                    </button>
                     <a href="index.html">Home</a>
                 </li>
                 <li><a href="profile.html">Profile</a></li>
@@ -39,39 +38,46 @@
     </header>
 
     <!-- Chat Layout -->
-    <div class="chat-container">
+    <main class="chat-container">
         <!-- Sidebar -->
-        <div class="sidebar">
-            <h3>Chats</h3>
-            <div class="chat-list">
-                <ul>
-                    <li>John Doe</li>
-                    <li>Jane Smith</li>
-                    <li>Customer Support</li>
-                </ul>
-            </div>
-            <h3>Options</h3>
-            <div class="options-list">
-                <ul>
-                    <li>New Chat</li>
-                    <li>Archived</li>
-                    <li>Settings</li>
-                </ul>
-            </div>
-        </div>
+        <aside class="sidebar">
+            <h2>Chats</h2>
+            <ul class="chat-list">
+                <li class="chat-item">
+                    <div class="chat-avatar"></div>
+                    <div>
+                        <strong>User 1</strong>
+                        <p>Last message...</p>
+                    </div>
+                </li>
+                <li class="chat-item">
+                    <div class="chat-avatar"></div>
+                    <div>
+                        <strong>User 2</strong>
+                        <p>Last message...</p>
+                    </div>
+                </li>
+                <li class="chat-item">
+                    <div class="chat-avatar"></div>
+                    <div>
+                        <strong>User 3</strong>
+                        <p>Last message...</p>
+                    </div>
+                </li>
+            </ul>
+        </aside>
 
-        <!-- Main Chat Area -->
-        <div class="chat-main">
-            <div class="chat-header">John Doe</div>
-            <div class="chat-messages">
-                <div class="message user">Hi there!</div>
-                <div class="message system">Hello! How can I help you today?</div>
+        <!-- Main Chat Section -->
+        <section class="main-chat">
+            <h2>Select a Chat</h2>
+            <div class="messages">
+                <p>Welcome to the MokeSell chat system!</p>
             </div>
-            <div class="chat-input">
-                <input type="text" placeholder="Type a message...">
-                <button>Send</button>
-            </div>
-        </div>
-    </div>
+            <form class="message-form">
+                <input type="text" placeholder="Type a message..." />
+                <button type="submit">Send</button>
+            </form>
+        </section>
+    </main>
 </body>
 </html>

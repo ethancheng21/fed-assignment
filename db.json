@@ -4,16 +4,27 @@
       "id": "1",
       "username": "testuser1",
       "email": "testuser1@example.com",
-      "password": "password123"
+      "password": "password123",
+      "chats": {
+        "testuser2": [
+          { "sender": "testuser1", "message": "Hey, how are you?", "timestamp": "2025-02-08T12:00:00Z" }
+        ]
+      }
     },
     {
       "id": "2",
       "username": "testuser2",
       "email": "testuser2@example.com",
-      "password": "mypassword"
+      "password": "password123",
+      "chats": {
+        "testuser1": [
+          { "sender": "testuser2", "message": "I'm good, thanks!", "timestamp": "2025-02-08T12:01:00Z" }
+        ]
+      }
     }
-  ],
-  "listing": [
+  ]
+ 
+  ,"listing": [
     {
       "id": "1",
       "title": "Item 1 from User 1",
