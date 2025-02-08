@@ -5,11 +5,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const searchBtn = document.getElementById("search-btn");
         const listingsContainer = document.getElementById("featured-listings-container");
 
-        // Filter inputs for condition and price range
+        // Get the filter inputs for condition and price range
         const minPriceInput = document.getElementById("min-price");
         const maxPriceInput = document.getElementById("max-price");
         const conditionButtons = document.querySelectorAll('.condition-btn'); // Condition buttons
-
+        const clearFilterBtn = document.getElementById("clear-filters"); // Clear filter button
+        
         let selectedCondition = ''; // Initialize selected condition as empty string
 
         // Log elements to verify they are loaded
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Listings Container:", listingsContainer);
 
         // If any element is missing, log an error
-        if (!searchBar || !searchBtn || !listingsContainer) {
+        if (!searchBar || !searchBtn || !listingsContainer || !clearFilterBtn) {
             console.error("Required elements not found!");
             return;
         }
@@ -45,6 +46,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 const query = searchBar.value.toLowerCase();
                 fetchListings(query, selectedCondition, minPriceInput.value, maxPriceInput.value); // Re-fetch with updated condition filter
             });
+        });
+
+        // Clear Filters Button Click Event
+        clearFilterBtn.addEventListener("click", function() {
+            // Reset condition and price filters to default
+            selectedCondition = '';
+            minPriceInput.value = '';
+            maxPriceInput.value = '';
+            conditionButtons.forEach(button => button.classList.remove('selected')); // Remove all selected condition styles
+            fetchListings(searchBar.value.toLowerCase(), '', '', ''); // Re-fetch listings without filters
         });
 
         // Initial fetch for featured listings
