@@ -1,0 +1,171 @@
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures full viewport height */
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+/* Header Styling */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: linear-gradient(45deg, #E86D2C, #E69631);
+    color: white;
+    padding: 1rem 5vw; /* Scalable padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box; /* Ensures padding doesn't cause overflow */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+}
+
+nav ul li a {
+    font-size: 1rem;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: white;
+    color: #E86D2C;
+}
+
+/* Product Details Section */
+#product-details {
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 3vw; /* Adjusted padding for smaller screens */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 3vh;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box; /* Prevents padding from causing overflow */
+}
+
+#product-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+#product-title {
+    font-size: 2rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+#product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+}
+
+.chat-button {
+    background-color: #E86D2C;
+    color: white;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    align-self: flex-start;
+}
+
+.chat-button:hover {
+    background-color: #D97A25;
+}
+
+.product-image {
+    width: 400px;
+    height: 400px;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-description {
+    font-size: 1.1rem;
+}
+
+.product-description div {
+    margin-bottom: 1rem;
+}
+
+.product-description strong {
+    font-weight: bold;
+    color: #333;
+}
+
+.product-description p {
+    margin-top: 0.5rem;
+    color: #666;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+    box-sizing: border-box;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* Adjust the product details layout for smaller screens */
+    #product-details {
+        padding: 2rem 5vw;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 300px;
+    }
+
+    .product-description {
+        max-width: 100%;
+    }
+
+    .chat-button {
+        width: 100%;
+        padding: 1rem;
+    }
+}
