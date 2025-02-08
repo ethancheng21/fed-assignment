@@ -33,7 +33,7 @@ let myChart = new Chart(wheel, {
   plugins: [ChartDataLabels],
   type: "pie",
   data: {
-    labels: ["500🪙","100🪙", "200🪙","2X⍰Banner","1d Bump","⍰ Banner"],
+    labels: ["500🪙","100🪙", "200🪙","2X⍰\nBanner","1d Bump","⍰\nBanner"],
     datasets: [
       {
         backgroundColor: pieColors,

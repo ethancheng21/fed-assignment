@@ -1,31 +1,45 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spin Wheel App</title>
-    <!-- Google Font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
       rel="stylesheet"
     />
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="gamespage.css" />
+    <script
+      src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+      type="module"
+    ></script>
   </head>
   <body>
-    <div class="wrapper">
-      <div class="container">
-        <canvas id="wheel"></canvas>
-        <button id="spin-btn">Spin</button>
-        <img src="181706.png" alt="spinner arrow" />
-      </div>
-      <div id="final-value">
-        <p>Click On The Spin Button To Start</p>
-      </div>
+    <!-- Fullscreen Background Lottie -->
+    <div class="background-lottie">
+      <dotlottie-player
+        src="https://lottie.host/fe45b9e5-76a9-4c17-8219-2d6498034e7b/UxQFNsr7jB.lottie"
+        background="transparent"
+        speed="1"
+        loop
+        autoplay
+      ></dotlottie-player>
     </div>
+    <!-- SPIN WHEEL SECTION -->
+      <div class="wrapper">
+        <div class="container">
+          <canvas id="wheel"></canvas>
+          <button id="spin-btn">Spin</button>
+          <img src="181706.png" alt="spinner arrow" />
+        </div>
+        <div id="final-value">
+          <p>Click On The Spin Button To Start</p>
+          <!-- Timer will be dynamically added by JavaScript -->
+        </div>
+      </div>
+
     <!-- Chart JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <!-- Chart JS Plugin for displaying text over chart -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.1.0/chartjs-plugin-datalabels.min.js"></script>
-    <!-- Script -->
     <script src="gamespage.js"></script>
   </body>
 </html>
