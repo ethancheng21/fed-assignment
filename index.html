@@ -6,6 +6,7 @@
     <title>MokeSell</title>
     <link rel="stylesheet" href="index.css">
 
+
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 </head>
 <body>
@@ -16,11 +17,11 @@
             <ul>
                 <li>
                     <button class="lottie-button">
-                        <dotlottie-player 
-                            src="https://lottie.host/fd30fb9f-a07f-4254-9821-186c239af1db/BaV9LaSJyv.lottie" 
-                            background="transparent" 
-                            speed="1" 
-                            direction="1" 
+                        <dotlottie-player
+                            src="https://lottie.host/fd30fb9f-a07f-4254-9821-186c239af1db/BaV9LaSJyv.lottie"
+                            background="transparent"
+                            speed="1"
+                            direction="1"
                             hover>
                         </dotlottie-player>
                     </button>
@@ -39,6 +40,9 @@
 
 
 
+
+
+
     <!-- Main Content -->
     <main>
         <section id="welcome-banner">
@@ -48,24 +52,31 @@
             </div>
         </section>
 
-        <!-- Search Bar -->
-    <div class="search-bar">
-        <input type="text" id="searchBar" placeholder="Search for items...">
-        <button id="search-btn">Search</button>
-    </div>
-    <!-- Condition Filter (Clickable Buttons) -->
-<div id="condition-filter">
-    <h4>Condition:</h4>
-    <button class="condition-btn" id="brand-new">Brand new</button>
-    <button class="condition-btn" id="like-new">Like new</button>
-    <button class="condition-btn" id="lightly-used">Lightly used</button>
-    <button class="condition-btn" id="well-used">Well used</button>
-    <button class="condition-btn" id="heavily-used">Heavily used</button>
+
+        <!-- Search Bar Section -->
+<div class="search-bar">
+    <input type="text" id="searchBar" placeholder="Search for items...">
+    <button id="search-btn">Search</button>
 </div>
 
 
-<!-- Clear Filters Button -->
-<button id="clear-filters">Clear Filters</button>
+<!-- Condition Filter and Clear Filters Button Section (Now below Search Bar) -->
+<div class="search-clear-container">
+    <div id="condition-filter">
+        <h4>Condition:</h4>
+        <div class="condition-buttons">
+            <button class="condition-btn" id="brand-new">Brand new</button>
+            <button class="condition-btn" id="like-new">Like new</button>
+            <button class="condition-btn" id="lightly-used">Lightly used</button>
+            <button class="condition-btn" id="well-used">Well used</button>
+            <button class="condition-btn" id="heavily-used">Heavily used</button>
+        </div>
+    </div>
+    <button id="clear-filters">Clear Filters</button>
+</div>
+
+
+
 
 
 
@@ -75,6 +86,7 @@
         <div id="search-results-container"></div>
     </section>
 
+
     <!-- Featured Listings Section -->
     <section id="featured-listings">
         <h2>Featured Listings</h2>
@@ -82,14 +94,21 @@
     </section>
 
 
-    
+
+
+   
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 MokeSell. All Rights Reserved.</p>
     </footer>
 
+
     <script src="config.js"></script>
     <script src="script.js" defer></script>
 
+
 </body>
 </html>
+
+
+
