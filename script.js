@@ -83,28 +83,37 @@ function displaySearchResults(listings) {
     const resultsContainer = document.getElementById("search-results-container");
     resultsContainer.innerHTML = ""; // Clear previous results
 
+
     if (listings.length === 0) {
         resultsContainer.innerHTML = "<p>No items found based on your search and filters.</p>";
         return;
     }
 
+
     listings.forEach(item => {
         const itemElement = document.createElement("div");
         itemElement.classList.add("listing");
 
+
+        // Create a clickable link that redirects to productview.html with the product ID in the URL
         itemElement.innerHTML = `
-            <img src="${item.image ? item.image : 'https://via.placeholder.com/150'}" 
-                 alt="${item.title}" 
-                 onerror="this.src='https://via.placeholder.com/150';" />
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
-            <span>Price: $${item.price}</span>
-            <span>Condition: ${item.condition}</span>
+            <a href="productview.html?id=${item.id}" class="listing-link">
+                <img src="${item.image ? item.image : 'https://via.placeholder.com/150'}"
+                     alt="${item.title}"
+                     onerror="this.src='https://via.placeholder.com/150';" />
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+                <span>Price: $${item.price}</span>
+                <span>Condition: ${item.condition}</span>
+            </a>
         `;
-        
+       
         resultsContainer.appendChild(itemElement);
     });
 }
+
+
+
 
 // Highlight selected condition button
 function highlightSelectedCondition(selected) {
@@ -113,32 +122,38 @@ function highlightSelectedCondition(selected) {
     selected.classList.add('selected'); // Highlight current selection
 }
 
+
 // Fetch Featured Listings
 async function fetchFeaturedListings() {
     try {
-        const response = await fetch("db.json"); // Use the local db.json file
+        const response = await fetch("db.json");
         const listings = await response.json();
         const listingsContainer = document.querySelector('#featured-listings-container');
+
 
         if (!listingsContainer) {
             console.error("Error: Listings container not found.");
             return;
         }
 
+
         if (!listings || listings.length === 0) {
             listingsContainer.innerHTML = '<p>No featured listings available.</p>';
             return;
         }
 
+
         listingsContainer.innerHTML = listings.listing.map((listing) => `
             <div class="listing">
-                <img src="${listing.image ? listing.image : 'https://via.placeholder.com/150'}" 
-                     alt="${listing.title}" 
-                     onerror="this.src='https://via.placeholder.com/150';" />
-                <h3>${listing.title}</h3>
-                <p>${listing.description}</p>
-                <span>Price: $${listing.price}</span>
-                <span>Condition: ${listing.condition}</span>
+                <a href="productview.html?id=${listing.id}" class="listing-link">
+                    <img src="${listing.image ? listing.image : 'https://via.placeholder.com/150'}"
+                         alt="${listing.title}"
+                         onerror="this.src='https://via.placeholder.com/150';" />
+                    <h3>${listing.title}</h3>
+                    <p>${listing.description}</p>
+                    <span>Price: $${listing.price}</span>
+                    <span>Condition: ${listing.condition}</span>
+                </a>
             </div>
         `).join('');
     } catch (error) {
@@ -146,3 +161,4 @@ async function fetchFeaturedListings() {
         alert('Failed to load featured listings.');
     }
 }
+
